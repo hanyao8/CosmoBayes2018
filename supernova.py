@@ -27,23 +27,18 @@ functions {
                 D = (3000.)*(1+z)*(etaf(1, omega)-etaf(x, omega));
                 return D;
                 }
-        real loglikelihood_lpdf(real[] mu, real[] muth, real[,] invC, int n){
+        real loglikelihood_lpdf(vector mu, vector muth, matrix invC){
                 real logL;
-                logL = 0.;
-                for (i in 1:n){
-                        for (j in 1:n){
-                                logL = logL + (mu[i] - muth[i])*invC[i, j]*(mu[j] - muth[j]);
-                                }
-                        }
+                logL = ((mu-muth)')*(invC*(mu-muth));
                 logL = logL*-0.5;
                 return logL;
                 }
 }
 data {
         int<lower = 0> n;
-        real z[n];
-        real mu[n];
-        real invC[n, n];
+        vector[n] z;
+        vector[n] mu;
+        matrix[n, n] invC;
 }
 
 parameters {
@@ -51,13 +46,13 @@ parameters {
         real omega;
 }
 transformed parameters {
-        real muth[n];
+        vector[n] muth;
         for (i in 1:n){
                 muth[i] <- 25. - 5.*log10(h) + 5.*log10(Dlstar(z[i], omega));
                 }
 }
 model {
-        target += loglikelihood_lpdf(mu| muth, invC, n);
+        target += loglikelihood_lpdf(mu| muth, invC);
 }
 """
 
