@@ -6,7 +6,11 @@ Created on Thu Jan 25 11:22:22 2018
 """
 
 #some change
+<<<<<<< HEAD
 #another change
+=======
+#Hanyao's change
+>>>>>>> 2fcf0db1cf51463dc759638899c86fc59e669072
 
 import pystan
 import numpy as np
