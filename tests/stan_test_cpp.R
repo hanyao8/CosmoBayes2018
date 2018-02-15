@@ -1,5 +1,18 @@
 library(rstan)
 
+cpp_code = "
+template <typename T0__, typename T1__, typename T2__>
+typename boost::math::tools::promote_args<T0__, T1__, T2__>::type
+ext_func1(T0__& x, T1__& a, T2__& b, std::ostream* pstream__) {
+  T1__ ans;
+  ans = a*x + b;
+  return ans;
+}
+
+"
+
+write(cpp_code, "ext_func.hpp")
+
 lin_reg_code = "
 functions {
 real ext_func1(real x, real a, real b);
@@ -30,7 +43,7 @@ generated quantities {}
 
 n = 11
 a = 6
-b = 0
+b = 2
 sigma = 0.1
 
 x = array(seq(0, 1, 0.1))
@@ -39,6 +52,6 @@ y = a*x + bs + rnorm(11, sd = 0.1)
 
 lin_reg_dat = list(n = n, x = x, y = y)
 
-model1 = stan_model(model_code = lin_reg_code, allow_undefined = TRUE, includes = paste0('\n#include "', file.path(getwd(), 'ext_func.hpp'), '"\n'))
+model1 = stan_model(model_code = lin_reg_code, allow_undefined = TRUE, includes = paste0('\n#include "', file.path(getwd(), 'ext_func1.hpp'), '"\n'))
 fit = sampling(model1, data = lin_reg_dat)
 print(fit)
