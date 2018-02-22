@@ -1,5 +1,4 @@
 #include <math.h>
-#include <cmath>
 
 template <typename T4__>
 typename boost::math::tools::promote_args<T4__>::type
@@ -54,38 +53,4 @@ int_exp1(T5__& arg1, std::ostream* pstream__){
     return ans;
 }
 
-
-template <typename T6__, typename T7__>
-typename boost::math::tools::promote_args<T6__, T7__>::type
-DL_star_integrand(T6__& argz, T7__& param1, std::ostream* pstream){
-	T7__ ans1;
-	ans1=pow(param1*pow((1+argz),3.0 ) +1 -param1 , -0.5);
-	return ans1;
-}
-
-
-template <typename T8__, typename T9__>
-typename boost::math::tools::promote_args<T8__, T9__>::type
-DL_star_intpart(T8__& x_f, T9__& param1, std::ostream* pstream){
-	T9__ ans; 
-	double h;
-	double x_s;
-	int n_steps;
-	T9__ z_cur1;
-	T9__ z_cur2;
-	T9__ z_cur3;
-	
-	ans = 0.0 ;
-	x_s = 0.0;
-	n_steps=100;
-	h=(x_f-x_s) / double(n_steps);
-	for (int i=0; i<n_steps; i=i+1){
-		z_cur1 = (x_s+(double(i))*h);
-		z_cur2 = (x_s+(double(i)+0.5)*h);		
-		z_cur3 = (x_s+(double(i)+1.0)*h);
-		ans=ans+ DL_star_integrand( z_cur1, param1,0 )/3.0 + DL_star_integrand( z_cur2, param1,0 )*4.0/3.0 + DL_star_integrand( z_cur3, param1,0 )/3.0;
-	}
-	ans = ans * h/2;
-	return ans;
-}
 
