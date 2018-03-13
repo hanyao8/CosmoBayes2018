@@ -49,10 +49,10 @@ transformed parameters {
     real DLstar;
     r = integrate_ode_rk45(DL_integrand,DL0,0.0,zsamp[i],param_array,x_r,x_i)[1][1];
     if (Omega_t < 0.999){
-      DLstar = 3000.*(1.0 + z[i])*sinh(r*(fabs(1-Omega_t))^0.5)*(1-Omega_t)^-0.5;
+      DLstar = 3000.*(1.0 + z[i])*sinh(r*(fabs(1-Omega_t))^0.5)*(fabs(1-Omega_t))^-0.5;
     }
     else if (Omega_t > 1.001){
-      DLstar = 3000.*(1.0 + z[i])*sin(r*(fabs(1-Omega_t))^0.5)*(1-Omega_t)^-0.5;
+      DLstar = 3000.*(1.0 + z[i])*sin(r*(fabs(1-Omega_t))^0.5)*(fabs(1-Omega_t))^-0.5;
     }
     else {
       DLstar = r*3000*(1.0+z[i]);
