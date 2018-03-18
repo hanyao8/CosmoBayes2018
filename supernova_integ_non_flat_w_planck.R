@@ -5,7 +5,7 @@ model_code1= "
 functions {  
   real[] DL_integrand(real z_, real[] y, real[] theta, real[] x_r, int[] x_i) {
     real dDdz[1];
-    dDdz[1] = (theta[1]*(1.0+z_)^3.0+theta[2]^(3*(1+theta[3]))+(1-theta[1]-theta[2])*(1.0+z_)^2.0)^(-0.5);
+    dDdz[1] = (theta[1]*(1.0+z_)^3.0+theta[2]*(1.0+z_)^(3*(1+theta[3]))+(1-theta[1]-theta[2])*(1.0+z_)^2.0)^(-0.5);
     return dDdz;
   }
 
