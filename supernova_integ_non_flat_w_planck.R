@@ -33,10 +33,10 @@ transformed data {
   }
 }
 parameters {
-  real h;
-  real Omega_m;
+  real<lower=0> h;
+  real<lower=0> Omega_m;
   real w;
-  real Omega_l;
+  real<lower=0> Omega_l;
 }
 transformed parameters {
   vector[n] mu_th;
@@ -73,5 +73,14 @@ model1 = stan_model(model_code = model_code1)
 fit = sampling(model1, data = data1)
 print(fit)
 
+f_e=extract(fit)
 
+h_results=f_e$h
+Omega_m_results=f_e$Omega_m
+w_results=f_e$w
+Omega_l_results=f_e$Omega_l
+
+df_results=data.frame(h_results,Omega_m_results,Omega_l_results,w_results)
+
+write.csv(df_results,file="SN_nonflat_wmodel_planck_2.csv")
 

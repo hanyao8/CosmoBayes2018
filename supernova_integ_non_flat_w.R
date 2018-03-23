@@ -67,6 +67,8 @@ model {
 }
 "
 
+
+
 data1 = list(n = 31, z = zmu_data[,1], mu = zmu_data[,2], invC = Cov_inv)
 model1 = stan_model(model_code = model_code1)
 fit = sampling(model1, data = data1)
